@@ -25,9 +25,22 @@ class EmployeeController {
     static async createEmployers(req, res) {
         try {
             let employee = new employers(req.body);
-            const resultEmployers = await employee.save();
-
-            res.status(200).json(resultEmployers.toJSON());
+            if (employee.name != "" && employee.role != "") {
+                const resultEmployers = await employee.save();
+                if (res == undefined) return resultEmployers;
+                else return res.status(200).json(resultEmployers.toJSON());
+            } else {
+                const errorMessage = "Erro: Dados informados erroneamente";
+                if (res == undefined)
+                    return {
+                        message: errorMessage,
+                    };
+                else {
+                    return res.status(400).json({
+                        message: errorMessage,
+                    });
+                }
+            }
         } catch (error) {
             res.status(500).json({ message: "Erro interno no servidor" });
         }

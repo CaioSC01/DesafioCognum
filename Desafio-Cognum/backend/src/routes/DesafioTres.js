@@ -23,16 +23,15 @@ router.get("/populate", async (req, res) => {
                     role: users[i].location.country,
                 },
             };
-            console.log(i + "\n" + usuarios);
+
             employee = await EmployeeController.createEmployers(usuarios);
 
             newEmployee.push(employee); // Adicione o retorno ao array
 
             i++;
         }
-        console.log("teste" + newEmployee.length);
+
         res.json(newEmployee);
-        // res.json(users);
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar Usuarios" });
     }
